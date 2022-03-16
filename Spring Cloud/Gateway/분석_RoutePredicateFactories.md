@@ -109,13 +109,13 @@ Weight Predicate는 그룹을 분리하고 가중치를 작성하여, 트래픽�
 ```yaml
 routes:
 - id: weight_high
-	uri: https://weighthigh.org
-	predicates:
-	- Weight=group1, 8
+  uri: https://weighthigh.org
+  predicates:
+  - Weight=group1, 8
 - id: weight_low
-	uri: https://weightlow.org
-	predicates:
-	- Weight=group1, 2
+  uri: https://weightlow.org
+  predicates:
+  - Weight=group1, 2
 ```
 
 80%의 요청은 weigh_high로 요청이 전달되고, 20%의 요청은 weigh_low로 전달됩니다.
