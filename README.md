@@ -13,6 +13,6 @@
 ## Dir
 📂 Spring Cloud
 
- ㄴ 📁 Gateway
+ ㄴ 📁 [Gateway](./Spring%20Cloud/Gateway/분석_SpringCloudGateway.md)
  
  ㄴ 📁 Eureka
