@@ -274,7 +274,23 @@ spring.cloud.gateway.discovery.locator.filters[1].args[replacement]: "'/${remain
 
 ## CORS 동작 제어하기
 
-(작성 예정)
+Spring Cloud Gateway 설정을 통해, CORS 동작도 제어가 가능합니다.
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://docs.spring.io"
+            allowedMethods:
+            - GET
+```
+
+위의 예시에서는 https://docs.spring.io로부터 발생된 모든 GET 요청에 대해 CORS 요청을 허용하는 예제입니다.
+
+Gateway route predicate에서 처리하지 않는 요청에 같은 CORS 설정을 제공하려면, spring.cloud.gateway.globalcors.add-to-simple-url-handler-mapping 프로퍼티를 true로 설정하면 됩니다. CORS preflight를 지원하며, route predicate가 ‘options’ HTTP 메소드를 true로 평가(?)하지 않을 때 유용합니다.
 
 ## Actuator API 활용하기
 
