@@ -15,4 +15,6 @@
 
  ㄴ 📁 [Gateway](./Spring%20Cloud/Gateway/분석_SpringCloudGateway.md)
  
- ㄴ 📁 Eureka
+ ㄴ 📁 Netflix
+ 
+    ㄴ 📁 [Eureka](./ g%20Cloud/Netflix/분석_Eureka.md)
