@@ -196,4 +196,39 @@ eureka.instance.leaseRenewalIntervalInSeconds=30
 
 ## 😀 Zones
 
-만약 Eureka Client가 배포해야할 Zone이 Multi Zone 구성일 경우, 기본이 되는 Zone을 설정을 통해 지정할 수 있습니다.
+만약 Eureka Client를 Multiple zone에 배포할 경우, 특정 Zone에 우선권을 부여할 수 있습니다. Eureka Client마다 이를 설정해주면 됩니다.
+
+먼저, [zones and regions](https://docs.spring.io/spring-cloud-netflix/docs/3.1.1/reference/html/#spring-cloud-eureka-server-zones-and-regions) 문서를 통해, 각각의 Zone과 Peer를 구성해주어야 합니다. 위의 링크를 참고하세요.
+
+다음으로, 서비스가 속해있어야 할 Zone을 지정해줘야 합니다. metadataMap 프로퍼티를 사용하여 설정하면 되는데, 만약 service1이 zone1과 zone2에 모두 배포되어 있다면, 각 zone에 속해 있다고 설정해주어야 합니다.
+
+아래의 예시를 확인하세요.
+
+Service 1 in Zone 1
+
+```java
+eureka.instance.metadataMap.zone = zone1
+eureka.client.preferSameZoneEureka = true
+```
+
+Service 1 in Zone 2
+```java
+eureka.instance.metadataMap.zone = zone2
+eureka.client.preferSameZoneEureka = true
+```
+
+## 😀 Refreshing Eureka Clients
+
+기본적으로, EurekaClient 빈은 새로고침이 가능합니다. 즉, Eureka Client의 Properties를 수정하고 새로고침할 수 있다는 뜻입니다. 새로고침이 발생한 Client는 Eureka Server로부터 등록이 해제되고, 주어진 서비스의 모든 인스턴를 일정 시간 사용할 수 없게 됩니다. 이를 방지하기 위해서, refresh 설정을 비활성화할 수도 있습니다.
+
+```java
+eureka.client.refresh.enable=false
+```
+
+## 😀 ****Using Eureka with Spring Cloud LoadBalancer****
+
+Spring Cloud LoadBalancer `ZonePreferenceServiceInstanceListSupplier` 를 사용할 수 있습니다. Eureka instance metadata(`eureka.instance.metadataMap.zone`)의 `zone`은 Instance 별로 Service Instance를 필터링하는데 사용되는 spring-cloud-loadbalancer-zone 속성 값을 설정하는데 사용됩니다.
+
+위의 내용을 설정하지 않고 `spring.cloud.loadbalancer.eureka.approximateZoneFromHostname`의 값을 `true`로 설정할 경우, 서버 호스트 이름의 도메인 이름을 zone에 대한 proxy로 사용할 수 있습니다.
+
+Zone 데이터의 다른 소스가 없으면 Client 구성(Instance가 아닌)을 기반으로 추측되어집니다. region 이름에서 zone 목록까지의 맵인 `eureka.client.availabilityZones`를 가져 와서 Instance의 자체 region의 첫 번째 영역(즉, `eureka.client.region`을 기본 Netflix와의 호환성을 위해 "us-east-1"로 기본 설정됨)을 가져 옵니다.
