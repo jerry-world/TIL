@@ -14,3 +14,14 @@ Eureka Server들은 각자 등록된 서비스들에 대한 상태를 복제하�
 
 [📔Service Discovery: Eureka](./detail/분석_ServiceDiscovery_EurekaClients.md)
 
+## 😀 Service Discovery: Eureka Server
+
+이번 섹션에서는 Eureka server를 설정하는 방법을 다룹니다.
+
+아래의 문서를 통해, Eureka Server에 대해 학습할 수 있습니다.
+
+[Service Discovery: Eureka Server](./detail/분석_ServiceDiscovery_EurekaServer.md)
+
+## 😀 Configuration properties
+
+[Configuration properties](https://docs.spring.io/spring-cloud-netflix/docs/current/reference/html/appendix.html)
