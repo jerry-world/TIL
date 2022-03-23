@@ -60,3 +60,29 @@ PasswordEncoder passwordEncoder =
 ```
 
 ### Password Storage Format
+
+DelegatingPasswordEncoder의 패스워드 포멧은 아래와 같습니다:
+
+```
+{id}encodedPassword
+```
+
+`id` 는 어떤 `PasswordEncoder`를 사용한 값인지를 식별하는 용도이고, `encodedPassword`는 선택된 `PasswordEncoder`를 통해 Encoding 된 값입니다. id는 반드시 Encoding된 비밀번호의 앞에 위치해야합니다. 만약 id가 작성되지 않았다면, id는 null 값이 들어가게 됩니다.
+
+위의 값이 저장되면, `id`가 그대로 노출되어 위험한 것이 아닌지 걱정할 수 있는데, 비밀번호 저장은 어떤 `PasswordEncoder`를 사용했는지와는 별개의 문제이기 때문에 걱정하지 않아도 됩니다. 또한, prefix가 없어도 포맷을 대부분 쉽게 알아낼 수 있기 때문에 사실 노출되어도 문제는 없는 값입니다.
+
+이를테면, BCrypt는 보통 `$2a$`로 시작합니다.
+
+### Password Encoding
+
+생성자로 전달된 idForEncode가 비밀번호를 인코딩할 때 사용할 PasswordEncoder를 의사결정합니다. DelegatingPasswordEncoder에서는 전달된 인자에 따라, 프리픽스를 확인하고, 해당 프리픽스에 해당하는 PasswordEncoder로 인코딩을 위임합니다.
+
+```java
+String encodedPassword = PasswordEncoder.encode(”Password”);
+```
+
+![DelegatingPasswordEncoder 동작 원리](../img/DelegatingpasswordEncoding.png)
+
+### Password Matching
+
+Matching도 마찬가지로 id를 기반으로 어떤 PasswordEncoder를 사용해야하는지를 식별합니다. id를 식별할 수 없는 경우 죽, `id` 값이 `null` 이거나 맵핑할 수 없는 경우 `IllegalArgumentException`이 발생합니다. id 값이 없는 경우를 `DelegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(PasswordEncoder)` 메서드를 사용하여, 기본값으로 대체할 수 있습니다.
