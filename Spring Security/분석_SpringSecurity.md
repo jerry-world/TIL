@@ -38,3 +38,11 @@ Spring Seucrity의 `PasswordEncoder` 인터페이스는 비밀번호가 안전�
 아래의 링크를 통해, Password Storage에 대한 내용을 학습하세요.
 
 [📔 Password Storage](./detail/SpringSecurity_PasswordStorage.md)
+
+### Protection Against Exploits
+
+Spring Security는 주요 취약점 공격을 보호할 수 있는 기능을 제공합니다. 가능한 모든 곳에서 이 보호기능은 Default로 활성화되어 있습니다.
+
+아래의 링크를 통해, Protection Against Exploits에 대한 내용을 계속 학습하세요.
+
+[📔 Protection Against Exploits](./detail/SpringSecurity_ProtectionAgainstExploits.md)
