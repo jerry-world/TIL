@@ -28,10 +28,8 @@ public class Application {
 
 Eureka Server는 기본적으로 Eureka 기능을 위한 UI 및 HTTP API endpoint를 제공하는 `/eureka/*` 홈페이지를 제공합니다.
 
-<aside>
-💡 Gradle의 종속성 해결규칙 및 부모 bom 기능의 부재로 인해, `spring-cloud-starter-netflix-eureka-server`가 application에서 실행되지 않을 수 있습니다. 따라서, 이러한 문제를 해결하기 위해, Spring cloud starter 부모 bom을 import하고, Spring Boot Gradle plugin을 추가해야 합니다.
+>💡 Gradle의 종속성 해결규칙 및 부모 bom 기능의 부재로 인해, `spring-cloud-starter-netflix-eureka-server`가 application에서 실행되지 않을 수 있습니다. 따라서, 이러한 문제를 해결하기 위해, Spring cloud starter 부모 bom을 import하고, Spring Boot Gradle plugin을 추가해야 합니다.
 
-</aside>
 
 ```groovy
 buildscript {

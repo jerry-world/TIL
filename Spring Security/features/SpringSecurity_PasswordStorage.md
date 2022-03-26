@@ -8,20 +8,17 @@
 
 ![Rainbow Table 예시](../img/rainbowtable.png)
 
-Rainbow Table의 예시 ([https://analogist.net/post/a-non-technical-history-of-password-storage/](https://analogist.net/post/a-non-technical-history-of-password-storage/))
+[Rainbow Table의 예시]([https://analogist.net/post/a-non-technical-history-of-password-storage/](https://analogist.net/post/a-non-technical-history-of-password-storage/))
 
 Rainbow Table을 무력화하기 위한 방법으로 개발자들은 Salted Password를 사용하기 시작했습니다. 비밀번호를 해시 함수를 통해 해시화 하는 것에 추가적으로 임의의 바이트(salt)를 생성하여 이를 대입해 비밀번호를 관리하는 것입니다. 고유한 salt와 비밀번호 조합으로 매번 해시값이 달라지기 때문에 더이상 Rainbow Table을 사용할 수 없게되었습니다.
 
 ![SALT 암호화 예시](../img/SALT암호화예시.png)
 
-SALT 암호화 예시 ([https://d2.naver.com/helloworld/318732](https://d2.naver.com/helloworld/318732))
+[SALT 암호화 예시]([https://d2.naver.com/helloworld/318732](https://d2.naver.com/helloworld/318732))
 
 현대에서는 이를 더 강화하기 위해, 적응형 단방향 함수 (adaptive one-way function)로 비밀번호를 저장하는 것이 좋습니다. 적응형 단방향 함수는 많은 리소스를 소모하여 비밀번호를 검증하기는 하지만, 워크 팩터(work factor)를 지정하여 비밀번호를 보다 암호의 강도를 높히는 방법입니다.(`bcrypt`, `PBKDF2`, `scrypt`, `argon2`)
 
-<aside>
-💡 Spring Security에서는 워크 팩터를 어떻게 지정하는지는 확인이 필요하나, 필자는 기존 host의 고유 하드웨어 정보(이를테면, MAC Addr)를 조합하여 워크 팩터를 지정하기도 했습니다.
-
-</aside>
+> 💡 Spring Security에서는 워크 팩터를 어떻게 지정하는지는 확인이 필요하나, 필자는 기존 host의 고유 하드웨어 정보(이를테면, MAC Addr)를 조합하여 워크 팩터를 지정하기도 했습니다.
 
 적응형 단방향 함수의 경우, 앞서 언급한 바와 같이, 많은 리소스를 소모하여 비밀번호를 검증하기 때문에, 여러번의 인증시도에 대해 리소스 부하(애플리케이션 성능 저하 유발)가 발생할 수 있습니다. 보안 성능을 확보하기 위해, 해당 리소스 부하를 해결할 수는 없습니다. 사용자는 장기 자격 증명(Password-authentication)을 단기 자격 증명(OAuth 등)으로 바꿔 인증을 제공하는 편이 더 나을 수 있습니다.
 
