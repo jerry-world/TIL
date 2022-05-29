@@ -12,7 +12,7 @@
 
 Java가 WORA를 실현할 수 있는 이유는 JVM와 바이트 코드가 있기 때문이다.
 
-바이트 코드는 자바 컴파일러가 자바 소스프로그램을 컴파일한 기계어이다. 우리가 자바 소스코드를 javac를 통해 컴파일을 하게 되면 `.class` 파일이 생성되는데, 이것이 바이트 코드이다. 
+바이트 코드는 자바 컴파일러가 자바 소스프로그램을 컴파일한 기계어이다. 우리가 자바 소스코드를 javac를 통해 컴파일을 하게 되면 `.class` 파일이 생성되는데, 이것이 바이트 코드이다.
 
 위에서 Java가 플랫폼에 독립적이라고 표현했다시피, Java의 바이트 코드는 **CPU에 의해 직접 실행하지 않고**, JVM에 의해 **인터프리터 방식**(또다른, **JIT 컴파일링 방식**도 있음)으로 한 명령씩 해석되어 실행한다.
 
@@ -55,8 +55,8 @@ Class Loader에 의해 JVM으로 로드된 바이트코드들은 Runtime Data Ar
 로딩과정에서 저장하는 데이터는 다음과 같다.
 
 - FQCN(Fully-Quailified Class Name)
-    - 클래스 로더, 클래스 패키지 경로, 패키지 이름, 클래스 이름을 모두 포함한 값
-    - ex) java.lang.Character$Subset
+  - 클래스 로더, 클래스 패키지 경로, 패키지 이름, 클래스 이름을 모두 포함한 값
+  - ex) java.lang.Character$Subset
 - Class, Interface, Enum을 구분하여 저장
 - 메서드와 변수
 
@@ -123,27 +123,27 @@ resolve 단계에서 런타임 constant pool에 symbolic references의 구체적
 
 ![Untitled](JVM과_가비지_컬렉션/Untitled%203.png)
 
-1. Method Area
+1. **Method Area**
 - JVM이 실행되면서 생성되는 공간이다.
 - Class에 대한 정보, 전역 변수 정보, Static 변수 정보가 저장되는 공간이다.
 - Runtime Constant Pool은 말 그대로 ‘상수’ 정보가 저장되는 공간이다.
 - 모든 스레드에서 Method Area의 정보가 공유된다.
-1. Heap
+1. **Heap**
 - new 연산자로 생성된 **인스턴스**, Array와 같은 **동적으로 생성된 데이터**가 저장되는 공간이다.
 - Heap에 저장된 데이터는 GC가 처리하지 않는 한 소멸되지 않는다.
 - **Reference Type의 데이터**가 저장되는 공간이다.
 - 모든 스레드에서 정보가 공유된다.
-1. Stack
+1. **Stack**
 - 지역변수, 메소드의 매개변수와 같이 잠시 사용되고 필요가 없어지는 데이터가 저장되는 공간이다.
 - 원시타입의 데이터가 값과 함께 할당된다.
 - Last In First Out, 나중에 들어온 데이터가 먼저 나간다.
 - 만약, 지역변수 이지만 Reference Type일 경우에는 Heap에 저장된 데이터의 주소값을 Stack에 저장해서 사용하게 된다.
 - 스레드마다 하나씩 존재한다.
-1. PC Register
+1. **PC Register**
 - 스레드가 생성되면서 생기는 공간이다.
 - 스레드가 어느 명령어를 처리하고 있는지 그 주소를 등록한다.
 - 현재의 처리하고있는 위치 정보를 저장하는 역할
-1. Native Method Stack
+1. **Native Method Stack**
 - Java 가 아닌 다른 언어(C, C++)로 구성된 메소드 실행이 필요할때 사용하는 공간이다.
 
 ### **Execution Engine**
@@ -174,7 +174,7 @@ JVM의 힙 영역에서 사용하지 않는 객체를 제거하는 작업을 총
 
 가비지 컬렉터에는 GC Root라는 개념이 존재한다. GC Root는 힙 외부에서 접근할 수 있는 변수나 오브젝트를 뜻한다. GC Root는 말그대로 가비지 컬렉션의 Root이다.
 
-GC Root는 
+GC Root는
 
 - 실행 중인 쓰레드
 - 정적 변수
@@ -187,8 +187,14 @@ GC Root는
 
 Heap영역에서 GC Root가 참조되고 있는 대상을 Marking하고, 참조되고있지 않은 메모리들을 해제하여 Heap 영역으로부터 제거한다. 이를 Sweep이라고 한다.
 
-Heap은 YG와 OG로 구분된다. YG는 새로운 객체들이 할당되는 영역이고, OG는 YG에서 오랫동안 살아남은 객체들이 존재하는 영역이다. 
+Heap은 YG와 OG로 구분된다. YG는 새로운 객체들이 할당되는 영역이고, OG는 YG에서 오랫동안 살아남은 객체들이 존재하는 영역이다.
 
 YG는 Eden, Survivor0, Survivor1 영역으로 나뉘게 된다.
 
 ![Untitled](JVM과_가비지_컬렉션/Untitled%205.png)
+
+- `Xms`, `Xmx` - Heap 사이즈의 최소, 최대값
+- `XX:NewSize` - Young Generation의 영역의 초기 사이즈
+- `XX:MaxNewSize` - Young Generation의 최대 사이즈
+- `XX:NewRadio` - 위와 같을 경우 Old Generation은 Young Generation의 2배의 크기를 갖는다.
+- `XX:SurvivorRatio` - 위와 같은 경우 Young Generation은 Survivor Space의 8배의 크기를 갖는다.
