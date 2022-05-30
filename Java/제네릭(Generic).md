@@ -32,13 +32,13 @@ List<String> stringList = new ArrayList<>();
 
 일반적으로 제네릭은 아래의 타입을 사용하는 것을 암묵적으로 약속했다.
 
-| 타입 | 설명 |
-| --- | --- |
-| <T> | Type |
-| <E> | Element |
-| <K> | Key |
-| <V> | Value |
-| <N> | Number |
+| 타입  | 설명 |
+|-----| --- |
+| <T&#62; | Type |
+| <E&#62; | Element |
+| <K&#62; | Key |
+| <V&#62; | Value |
+| <N&#62; | Number |
 
 ## 제네릭 타입
 
