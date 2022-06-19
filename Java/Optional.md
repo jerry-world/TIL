@@ -4,7 +4,7 @@ T 타입 객체의 래퍼클래스 - Optional<T>
 
 ```java
 public final class Optional<T>{
-	private final **T valu**e; //T타입의 참조변수
+	private final T value; //T타입의 참조변수
   ...
 }
 ```
@@ -55,11 +55,11 @@ String str1 = optVal.orElseThrow(NullPointerException::new)//null이면 NullPoin
 - ifPresent(람다) - Null이 아닐때만 내용을 수행
 
 ```java
-if(Optional.ofNullable(str).**isPresent**()) {
+if(Optional.ofNullable(str).isPresent()) {
 	System.out.println(str);
 }
 
-Optional.ofNullable(str).**ifPresent**(System.out::println);
+Optional.ofNullable(str).ifPresent(System.out::println);
 ```
 
 ## OptinonalInt, OptionalLong, OptionalDouble
