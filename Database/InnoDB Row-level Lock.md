@@ -32,7 +32,7 @@ Lock의 종류로는 `Shared Lock`(공유 락)과 `Exclusive Lock`(베타 락)�
 
 ![Untitled](InnoDB%20Row-level%20Lock/Untitled.png)
 
-전제 조건)예시에서는 식별자 ID와 이름, 수량을 갖는 Order 테이블을 위 그림과 같이 만들어두었다.
+전제 조건)예시에서는 식별자 ID와 이름, 수량을 갖는 Products 테이블을 위 그림과 같이 만들어두었다.
 
 상황) A유저는 고기만두 상품 페이지를 조회하였다. B유저는 고기만두를 실제 결제하였다.
 
