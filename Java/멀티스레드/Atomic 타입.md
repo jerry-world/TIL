@@ -25,7 +25,7 @@ An atomic action cannot stop in the middle: it either happens completely, or it 
 
 때문에 위의 예시처럼 액션이 여러개가 분리(비 원자성)되어 하나는 실행되고 하나는 실행되지 않는 문제를 없게 하려면 Atomic 이 필요하다.
 
-Java 에서는 원자성을 보장하기 위해 `volatile`, `synchronization`, `atomic` 을 지원한다.
+Java 에서는 동시성을 보장하기 위해 `volatile`, `synchronized`, `atomic` 을 지원한다.
 
 그중 이 atomic 타입은 단일 변수에 대해 원자성 작업을 지원한다. 참조 타입 또는 원시타입에 대한 Wrapper Class 형태이며, 사용 시 내부적으로 `CAS(Compare-And-Swap)` 알고리즘을 사용하여 lock 없이 동기화를 처리할 수 있다.
 
