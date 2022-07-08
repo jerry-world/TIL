@@ -14,7 +14,7 @@
 
 Context, Strategy 인터페이스, Concrete 클래스에 집중해보자.
 
-Strategy 인터페이스는 method라는 추상 메서드를 가지고 있고(`캡슐화`), 이를 실체화한 Concrete 클래스 3개가 있다.
+Strategy 인터페이스는 method라는 추상 메서드를 가지고 있고, 이를 실체화한 Concrete 클래스 3개가 있다.
 
 그리고 실제로 이 Strategy를 사용하는 Context가 있다.
 
