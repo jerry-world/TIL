@@ -40,10 +40,7 @@ Clustered Index는 Primary Key가 존재하거나 Null을 허용하지 않는 Un
 
 ![Untitled](Index(1)-Clustered%20Index와%20Secondary%20Index/Untitled%205.png)
 
-<aside>
-💡 Clustered Index는 PRIMARY KEY이거나 not null인 Unique KEY가 존재하는 경우 자동으로 생성되며, Key를 오름차순(Default) 정렬한다.
-
-</aside>
+> 💡 Clustered Index는 PRIMARY KEY이거나 not null인 Unique KEY가 존재하는 경우 자동으로 생성되며, Key를 오름차순(Default) 정렬한다.
 
 ### Clustered Index의 인덱스 구조
 

@@ -12,12 +12,9 @@ Java에서 변수의 동시성 문제를 해결하기 위해서, `java.util.conc
 
 Atomic의 뜻을 풀이하면 원자라는 의미를 가지고 있는데, 이는 `더 이상 쪼갤 수 없는 가장 단위` 로 해석할 수 있다.
 
-<aside>
-💡 In programming, an atomic action is one that effectively happens all at once.
+> 💡 In programming, an atomic action is one that effectively happens all at once.
+> An atomic action cannot stop in the middle: it either happens completely, or it doesn't happen at all.
 
-An atomic action cannot stop in the middle: it either happens completely, or it doesn't happen at all.
-
-</aside>
 
 인터넷 쇼핑몰에서 물건을 살 때의 데이터베이스에서는 결제 정보와 결제에 따른 상품 수량 감소 액션이 함께 맞물려 진행되어야 한다. 만약 결제는 되었는데 수량이 감소되지 않았다면, 다른 사용자는 수량이 존재하는 줄 알고, 상품을 구매하게 되어, 무결성의 문제가 발생한다.
 

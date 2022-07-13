@@ -46,10 +46,8 @@ Name.print1();
 new Name().print2();
 ```
 
-<aside>
-💡 Static이 나오면 Method Area, Class Variable, GC 키워드를 떠올리자.
+> 💡 Static이 나오면 Method Area, Class Variable, GC 키워드를 떠올리자.
 
-</aside>
 
 **static 클래스**
 

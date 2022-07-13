@@ -28,10 +28,8 @@ Optional<String> optVal = Optional.of(null); //NullPointerException발생
 Optional<String> optVal = Optional.ofNullable(null); //Okay
 ```
 
-<aside>
-💡 null대신 빈 Optional<T> 객체를 사용하자!!
+> 💡 null대신 빈 Optional<T> 객체를 사용하자!!
 
-</aside>
 
 ```java
 Optional<String> optVal = null; // (x)

@@ -20,13 +20,11 @@
 
 effectively final은 Java8에서 추가된 기능으로, non-final로 선언 즉, final 키워드를 붙히지 않았지만 초기화 이후 한번도 변경되지 않은 지역 변수를 대상으로 컴파일러가 Lambda나 익명 클래스에서 final 변수로 취급하는 것이다.
 
-<aside>
-💡 **Effectively final**
-A non-final local variable or method parameter whose value is never changed after initialization is known as effectively final.
+> 💡 **Effectively final**
+> A non-final local variable or method parameter whose value is never changed after initialization is known as effectively final.
 
-초기화 이후 한번도 변경되지 않은 ‘final이 아닌 로컬 변수’ 또는 ‘메서드 파라미터’ 는 effectively final 이라고 할 수 있다.
+> 초기화 이후 한번도 변경되지 않은 ‘final이 아닌 로컬 변수’ 또는 ‘메서드 파라미터’ 는 effectively final 이라고 할 수 있다.
 
-</aside>
 
 Java 7에서는 익명 클래스가 외부 지역변수에 접근하기 위해서는 final인 경우에만 접근이 가능했다. 따라서, 항상 final 키워드를 추가해줘야했다. 하지만 Java 8부터는 이 effectively final이 추가되어 effectively final 조건을 충족하면 final 키워드를 붙히지 않고도 익면 클래스 내에서 외부 지역변수를 사용할 수 있게 되었다.
 
@@ -36,11 +34,9 @@ Java 7에서는 익명 클래스가 외부 지역변수에 접근하기 위해�
 
 바로 `람다 캡처링` 때문이다. 아까 서두에서 람다는 외부 지역 변수의 `복사본` ****을 사용한다고 말했다.
 
-<aside>
-💡 Lambda Variable Capturing
-기존 메서드의 스택 변수들에 대해 참조가 가능하도록 람다의 스택에 복사하는 과정
+> 💡 Lambda Variable Capturing
+> 기존 메서드의 스택 변수들에 대해 참조가 가능하도록 람다의 스택에 복사하는 과정
 
-</aside>
 
 람다를 사용할때 JVM 메모리 구조를 이해해야 내용을 이해할 수 있다.
 

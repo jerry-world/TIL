@@ -16,10 +16,8 @@ Stream<Double> randomStream = Stream.generate(Math::random); // 람다식
 IntStream intStream = new Random().ints(5); //난수 스트림(크기가 5)
 ```
 
-<aside>
-💡 데이터소스 → 스트림만들기 → 중간연산(여러번 가능) → 최종연산
+> 💡 데이터소스 → 스트림만들기 → 중간연산(여러번 가능) → 최종연산
 
-</aside>
 
 ## 스트림이 제공하는 기능 - 중간 연산과 최종 연산
 
@@ -252,10 +250,8 @@ DoubleStream flatMapToDuble(ToDoubleFunction<T> mapper)
 IntStream flatMapToInt(ToIntFunction<T> mapper)
 LongStream flatMapToLing(ToLongFunction<T> mapper | 스트림의 요소를 변환한다. |
 
-<aside>
-💡 중간 연산의 핵심은 map과 flatMap이다.
+> 💡 중간 연산의 핵심은 map과 flatMap이다.
 
-</aside>
 
 ### 스트림 자르기 - skip(), limit()
 
@@ -406,39 +402,34 @@ Stream<**String**> strStrStrm = strArrStrm**.flatMap(Arrays::stream**); // Array
 
 ## 최종 연산
 
-| 최종 연산 | 설명 |
-| --- | --- |
-| void forEach(Consumer<? super T> action
-void forEachOrdered(Consumer<? super T> action | 각 요소에 지정된 작업 수행
-Ordered는 요소의 순서를 유의하여 작업한다. |
-| long count() | 스트림 요수의 개수를 반환 |
-| Optional<T> max(Comparator<? super T> comparator)
-Optional<T> min(Comparator<? super T> comparator) | 스트림의 최대값/최소값을 반환
-정렬 기준에 짜라 max와 min을 반환한다. |
-| Optional<T> findAny() //병렬 처리할 때 사용 filter와 함께 사용함
-Optional<T> findFirst() // 직렬 처리할 때 사용 | 스트림의 요소 아무거나 하나를 반환하거나, 첫번째 요소를 반환 |
-| boolean allMatch(Predicate<T> p)
-boolean anyMatch(Predicate<T> p)
-boolean noneMatch(Predicate<T> p) | 주어진 조건을 모두 만족하는지 여부
-하나라도 만족하는지 여부
-하나도 만족하지 않는지 여부 |
-| Object[] to Array()
-A[] toArrayt(IntFunction<A[]> generator) | 스트림의 모든 요소를 배열로 반환 |
-| Optional<T> reduce(BinaryOperator<T> accumulator)
+| 최종 연산                                                        | 설명 |
+|--------------------------------------------------------------| --- |
+| void forEach(Consumer<? super T> action                      
+ void forEachOrdered(Consumer<? super T> action               | 각 요소에 지정된 작업 수행
+ Ordered는 요소의 순서를 유의하여 작업한다.                                  |
+| long count()                                                 | 스트림 요수의 개수를 반환 |
+| Optional<T> max(Comparator<? super T> comparator)            
+ Optional<T> min(Comparator<? super T> comparator)            | 스트림의 최대값/최소값을 반환
+ 정렬 기준에 짜라 max와 min을 반환한다.                                    |
+| Optional<T> findAny() //병렬 처리할 때 사용 filter와 함께 사용함|           
+ Optional<T> findFirst() // 직렬 처리할 때 사용                       | 스트림의 요소 아무거나 하나를 반환하거나, 첫번째 요소를 반환 |
+| boolean allMatch(Predicate<T> p)                             | 주어진 조건을 모두 만족하는지 여부|
+| boolean anyMatch(Predicate<T> p)                             | 하나라도 만족하는지 여부|
+ boolean noneMatch(Predicate<T> p)                            | 하나도 만족하지 않는지 여부 |
+| Object[] to Array() A[] toArrayt(IntFunction<A[]> generator) | 스트림의 모든 요소를 배열로 반환 |
+| Optional<T> reduce(BinaryOperator<T> accumulator) |스트림의 요소를 하나씩 줄여가면서(리듀싱) 계산한다.|             
 T reduce(T identity, BinaryOperator<T> accumulator)
 U reduce(U identity, BiFunction<U,T,U> accumulator,
-         BinaryOperator<U> combiner) | 스트림의 요소를 하나씩 줄여가면서(리듀싱) 계산한다.
+         BinaryOperator<U> combiner) | 
 예를들어 모든 요소를 sum할 때, 하나씩 줄여가면서 sum하는 것(?) |
 | R collect(Collector<T,A,R> collector)
 R collect(Supplier<R> supplier, BiConsumer<R,T>
           accumulator, BiConsumer<R,R> combiner) | 스트림의 요소를 수집한다.
 주로 요소를 그룹화하거나 분할한 결과를 컬렉션에 담아 반환하는데 사용된다. |
 
-<aside>
-💡 reduce와 collect가 최종연산의 핵심이다. 특히나 reduce가 핵심이다.
-최종연산은 스트림 요소를 소모하면서 스트림이 닫히기 때문에 단 한번만 수행할 수 있다.
+> 💡 reduce와 collect가 최종연산의 핵심이다. 특히나 reduce가 핵심이다.
+> 최종연산은 스트림 요소를 소모하면서 스트림이 닫히기 때문에 단 한번만 수행할 수 있다.
 
-</aside>
 
 ### 스트림의 모든 요소에 지정된 작업을 수행 - forEach(), forEachOrdered()
 
@@ -514,10 +505,8 @@ for(int b : stream)
   a = a + b; //sum
 ```
 
-<aside>
-💡 Stream의 최종연산은 reduce()로 만들어진 것이다.
+> 💡 Stream의 최종연산은 reduce()로 만들어진 것이다.
 
-</aside>
 
 ### collect()와 Collectors
 
