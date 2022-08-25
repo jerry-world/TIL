@@ -64,3 +64,29 @@ for (let i = 0; i < partitionSize; i++) {
 갑자기 드는 생각이... 굳이 쪼개지말고 타임아웃을 길게주는 것도 좋은방법일듯?...
 쪼개서 넘기면 로그도 여러번 남고, 코드 수정도 많아지고 오히려 가독성이 저하될것같음...
 timeout을 길게 주는 이유를 주석으로 남기고 평균치를 계산해서 좀더 넉넉하게 주는 방법으로 진행해보자.
+
+
+---
+무슨일이든 생각처럼 안되는 법이지.
+
+asnyc 옵션은 순차적으로 보내주기만할 뿐 동기적으로 처리할 수는 없었다.
+
+동기처리를 위해서, 콜백에 재귀를 담아 처리하는 방식으로 진행했다.
+
+
+### Callback 시, 재귀 호출
+```javascript
+let action = function(data, index){
+    $.ajax({
+        url: url, 
+        success: function(){
+            if(data.list.length<=index) {
+                action(data, index++);
+            }else{
+                finish();
+            }
+        }
+        //...
+    });
+}
+```
