@@ -116,3 +116,62 @@ GRASP의 CREATOR(창조자) 패턴은 객체를 생성할 책임을 어떤 객�
 > - B가 A 객체를 긴밀하게 사용한다.
 > - B가 A 객체를 초기화하는데 필요한 데이털르 가지고 있다(이 경우 B는 A에 대한 정보 전문가(INFORMATION EXPERT)이다.)
 > CREATOR 패턴의 의도는 어떤 방식으로든 생성되는 객체와 연결되거나 관련될 필요가 있는 객체에 해당 객체를 생성할 책임을 맡기는 것이다.
+
+### 변경으로부터 보호하기
+```java
+public class SomeClass{
+    private ACondition aCondition;
+    private BCondition bCondition;
+    private CCondition cCondition;
+    public void someCondition(someEnum enumData) {
+        if (enumData == someEnum.A) {
+            aCondition = new ACondition();
+        } else if (enumData == someEnum.B) {
+            bCondition = new BCondition();
+        } else if (enumData == someEnum.C) {
+            cCondition = new CCondition();
+        }
+    }
+}
+```
+위의 예시를 보자. someCondition 메서드를 호출할 때 매개로 전달된 enumData에 따라, a~c Condition 중 하나의 인스턴스를 만든다.
+이 코드의 문제점은 클래스의 응집도가 낮고, 변경을 발생시킬 요소가 있다는 것이다.
+만약 각 Condition이 변경된다면 높은 SomeClass와의 결합도로 인해, SomeClass가 바뀌어야 한다.
+
+SomeClass는 사실 a~c 조건이든 상관이 없다. 그냥 조건만 받으면 될 뿐이다.
+다형성 패턴즉 적용하여 Condition으로 묶어 캡슐화와 변경으로부터 보호하는 부분 두가지를 모두 챙길 수 있다.
+
+```java
+public class SomeClass{
+    private Condition condition;
+}
+
+public interface Condition{...}
+
+public class ACondition implements Condition{...}
+
+public class BCondition implements Condition{...}
+
+public class CCondition implements Condition{...}
+```
+
+> POLYMORPHISM 패턴
+> 
+> 객체의 타입에 따라 변하는 로직이 있을 때 변하는 로직을 담당할 책임을 어떻게 할당해야 하는가?
+> 
+> 타입을 명시적으로 정의하고 각 타입에 다형적으로 행동하는 책임을 할당하라.
+> 
+> 조건에 따른 변화는 프로그램의 기본 논리다. 프로그램을 if ~else 또는 switch ~ case 등의 조건 논리를 사용해서 설계한다면 새로운 변화가 일어난 경우 조건 논리르 수정해야 한다.
+> 이것은 프로그램을 수정하기 어렵고 변경에 취약하게 만든다.
+> 
+> POLYMORPHISM 패턴은 객체의 타입을 검사해서 타입에 따라 여러 대안들을 수행하는 조건적인 논리를 사용하지 말라고 경고한다. 대신 다형성을 이용해 새로운 변화를 다루기 쉽게 확장하라고 권고한다.
+
+> PROTECTED VARIATIONS 패턴
+> 
+> 객체, 서브시스템, 그리고 시스템을 어떻게 설계해야 변화와 불안정성이 다른 요소에 나쁜 영향을 미치지 않도록 방지할 수 있을까?
+> 
+> 변화가 예상되는 불안정한 지점들을 식별하고 그 주위에 안저된 인터페이스를 형성하도록 책임을 할당하라.
+> 
+> PROTECTEC VARIATIONS 패턴은 책임 할당의 관점에서 캡슐화를 설명한 것이다. "설계에서 변하는 것이 무엇인지 고려하고 변하는 개념을 캡슐화하라"라는 객체지향의 오랜 격언은
+> PROTECTED VARIATIONS 패턴의 본질을 잘 설명해준다. 우리가 캡슐화해야 하는 것은 변경이다. 변경이 될 가능성이 높은가? 그렇다면 캡슐화하라.
+
