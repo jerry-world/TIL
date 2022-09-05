@@ -10,7 +10,7 @@
 
 일반적인 인터페이스를 통한 구현 구조를 표현한 구조를 한번 UML로 살펴보자.
 
-![Untitled](%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%BC%20%E1%84%91%E1%85%A8%E1%84%89%E1%85%AB%20%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8(Open%20Closed%20Principle)%2057c87dec0b49416ba8a01f861c73e981/Untitled.png)
+![Untitled](개방 폐쇄 원칙(Open Closed Principle)/Untitled.png)
 
 위의 그림에서 Tire 인터페이스는 roll 메서드를 추상메서드로 가지고있다. 만약 새로운 타이어가 출시된다면, 위의 Tire 인터페이스의 규칙에 따라 만들기만 하면된다. 확장에는 열려있다. 그러면 Tire를 사용하는 CarProducer 입장에서는 새로운 타이어가 확장된다고 해서 변경이 될까? 그렇지 않다. 그이유는 CarProducer는 Tire를 의존하고있기 때문에 새로운 타이어가 출시된다 하더라도, 기존 그대로 사용할 수 있는 것이다.
 
