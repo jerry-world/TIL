@@ -93,6 +93,8 @@ Parameter Store는 AWS Systems Manager 서비스에 포함되는 서비스이다
 - /live/A/datasource_password
 - /live/B/datasource_password
 
+필요에 따라서는 `보안 문자열`을 선택하여 KSM 기반으로 값을 암호화하여 관리할 수도 있다.
+
 ![img_3.png](img_3.png)
 
 파라미터 생성이 완료되었다.
@@ -110,3 +112,80 @@ Parameter Store는 AWS Systems Manager 서비스에 포함되는 서비스이다
 
 ### Spring Boot 설정하기
 
+(https://spring.io/projects/spring-cloud-aws 에서 컨트롤 가능하지만, 이 포스팅에서는 com.coveo를 사용하여 테스트한다.)
+
+먼저, 해당 깃헙(https://github.com/coveooss/spring-boot-parameter-store-integration)을 참고하여 의존성을 주입한다.
+필자는 포스팅 작성일 기준 최신버전인 1.5.0 버전을 사용하였다. 스프링 부트 버전에 따라 라이브러리 동작 여부가 확실하지 않으니 이를 주의해야한다.
+
+```groovy
+//...build.gradle
+
+dependencies {
+  implementation 'com.coveo:spring-boot-parameter-store-integration:1.5.0'
+}
+```
+
+파라미터 스토어를 사용하기 위해서는, 환경변수 내 parameter store 사용 여부를 정의해야한다.
+```yaml
+#...application.yml
+
+awsParameterStorePropertySource:
+  enabled: true
+```
+
+해당 Github 내 README를 읽어보면 이 라이브러리는 AWS Java SDK를 사용하고 있다.
+AWS Java SDK에서는 외부에서 AWS 자격 증명을 획득하기 위해, 몇가지의 자격 증명 취득 방법에 대해서 제시한다.
+
+이말인 즉슨, 내 계정의 parameter store에 접근하기 위해, SDK를 사용하여 Credential 을 작성하고 이를 통해 나의 Parameter Store 에 접근하는 것으로 이해하면 된다.
+
+AWS SDK는 자격 증명 정보를 작성하는 방법 몇가지를 제안한다.
+- 시스템 속성 내 특정 속성에 기재
+- 환경 변수 내 특정 변수에 기재
+- Amazon ECS 컨테이너 자격 증명
+- 인스턴스 프로파일 자격 증명
+- 파일로 관리
+
+이 중 `파일로 관리`하는 방법으로 포스팅을 진행한다.
+
+기본적으로 AWS SDK는 홈 디렉터리 내 .aws 디렉터리가 존재하는지 확인하고, 사전 지정된 변수에 값이 존재할 경우 이를 자격 증명 정보로 활용한다.
+
+Windows 및 Linux 무관하다. Windows 는 C:\user\사용자명\ 디렉터리를 사용하면 되고, Linux는 /home/사용자명/ 디렉터리를 사용하면 된다.
+
+```shell
+cd ~
+mkdir -p .aws
+touch .aws/credentials
+touch .aws/config
+```
+
+`credentials` 파일엔 자격증명 정보를 저장하고, `config` 파일엔 region 정보 등 설정 정보를 저장한다.
+
+```shell
+# .aws/credentials
+[default]
+aws_access_key={ACCESS KEY}
+aws_secret_access_key={aws_secret_access_key}
+```
+```shell
+[default]
+region=northeast-2
+output=json
+```
+
+이러면 자격증명 부분도 끝이납니다.
+
+이제는 윗단원에서 수행한 파라미터를 실제 application.yml에서 불러올 수 있도록 작성만 하면 된다.
+방법은 상당히 심플하다.
+단순히 파라미터 스토어의 이름만 넣으면 된다.
+
+```yaml
+#application.yml
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/a
+    username: user
+    password: ${/local/A/datasource-password}
+```
+
+이제 애플리케이션을 구동하면 parameter store 적용 끝이다!
