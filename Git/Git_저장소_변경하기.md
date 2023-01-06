@@ -73,6 +73,8 @@ git remote rename origin-new origin
 보통 IDE에서 이 작업을 수행하면, 로컬 브랜치가 이전 원격 저장소를 바라보고 있기 때문에, 푸시할 때 에러메시지가 발생한다.
 이럴때는 upstream을 직접 수행해주면 되는데, 푸시를 수행할 때, 업스크림을 직접 설정하거나, IDE의 도움을 받으면 된다.
 
+![img_4.png](img_4.png)
+
 ```shell
 git push -u origin main
 ```
