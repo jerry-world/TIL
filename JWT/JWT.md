@@ -40,5 +40,33 @@ JWT는 `Header`.`Payload`.`Signature` 와 같은 형태를 띈다.
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`
 
 
+# 내가 계속 헷갈리는 포인트
 
+기존 일반적인 Session 방식에서는 Spring security 에서 제공하는 UsernamePassowrdAuthenticationFilter를 통해, 사용자 정보를 식별하고 인증을 수행한다. 내부 매커니즘을 간단히 다뤄보자면,
+최초 또는 패스워드 변경 시, PasswordEncoder를 통해 패스워드를 암호화하여 저장하고, 로그인을 수행했을 때, 암호화된 패스워드와 사용자가 입력하여 요청한 패스워드가 일치하는지를 `PasswordEncoder.match()`
+를 통해, 인증하고 세션을 발급한 뒤, `JSESSION_ID`를 발급하여 사용자 인증 및 식별을 처리하였다.
 
+JWT 인증방식도 사실 크게 다르지 않다.
+
+로그인 방식은 전과 크게 다르지 않다. 사용자 패스워드를 암호화하여 저장하고, 로그인 당시 UsernamePasswordAuthenticationFilter를 통해, 사용자가 있는지 식별하고, 패스워드가 일치하는지 체크한다.
+사실 상기 UsernamePasswordAuthenticationFilter는 인증 처리 방식에 불과하지 않는다.
+
+나는 매번 이부분과 JWT 간의 연관성에 대해서 계속적으로 헷갈리고 있었는데 가장 큰 초점은 세션을 만들고 이를 관리하느냐, 아니면 JWT 토큰을 발급하느냐의 차이일 뿐이다.
+
+다시말하면, JWT를 **언제 어떻게 발급**하고, **언제 어떻게 만료**되며, **언제 어떻게 인증 검증**을 수행하느냐에 포커스만 두면 되는 것이다.
+
+일반적인 인증 매커니즘 순서에 따라서 나열해보겠다.
+먼저 기본적인 인증 매커니즘은 이러하다.
+
+1. HTTP 요청이 인증을 필요로 하는지 체크한다.
+2. JWT 토큰이 존재하는지 체크한다.
+  - 존재할 경우
+    - 토큰이 유효한지 체크하고, 유효할 경우 복호화된 객체를 반환한다.
+    - 복호화된 객체를 통해, Claim 정보를 토대로 사용자 존재 여부를 확인한다.
+    - Claim 정보를 통해, 만료 여부 등 추가 유효성 검증을 수행하고 문제가 없으면 인증 처리를 완료하고 다음단계로 넘어간다.
+  - 존재하지 않을경우, 혹은 존재하더라도 뭔가 실패했을 경우,
+    - UsernamePasswordAuthenticationFitler의 로직에 따라, 요청 정보에 사용자 정보(ID, Password) 가 존재하는지 확인하고, 존재할 경우 사용자 정보가 일치하는지 확인한 뒤, 일치할경우 JWT 토큰을 발급하여 로그인 처리를 수행한다.
+  - 이마저도 실패할 경우
+    - 접근이 불가함을 확인하고 로그인 페이지로 리다이렉트 하거나, 기타 인증이 실패했을 경우에 해당하는 액션을 수행하면 된다.
+   
+자세한 사항은 [Spring Securiy + JWT](https://github.com/small-dogg/spring-security-jwt) 리포지토리를 확인을해보자.
