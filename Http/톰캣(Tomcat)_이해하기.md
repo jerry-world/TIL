@@ -1,0 +1,23 @@
+# 톰캣(Tomcat) 이해하기
+
+Apache Tomcat은 Jakarta Servlet, Kakarta Pages, Jakarta Expression Language, Jakarta WebSocket, Jakarta Annotations, Jakarta Authentication 사양을 오픈소스로 구현한 것이다.
+이 Jakarta 사양들은 Jakarta EE 플랫폼의 일부에 해당한다.
+
+Jakarta EE 플랫폼은 Java EE 프랫폼의 진화된 형태이다. 기존 Tomcat 9이하 버전에서는 java EE 플랫폼의 일부로 개발된 사양이며, Tomcat 10 이후 버전부터는
+Jakarta EE 플랫폼의 일부 사양을 기반으로 구현되었다.
+
+다시말해, Java EE 또는 Jakarta EE 플랫폼의 일부 사용을 기반하여 구현된 소프트웨어 정도로 구성을 이야기할 수 있을 것 같다.
+
+다시 한번 나열해보면,
+ - Servlet
+ - Pages
+ - Expression Language
+ - Websocket
+ - Annotations
+ - Authentication
+
+사양을 취급하는 소프트웨어이다.
+
+ref. [Tomcat Git Repository](https://github.com/apache/tomcat.git)
+
+---
